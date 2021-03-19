@@ -53,12 +53,25 @@ public class IPProject {
     public static String makeBinaryAddress(String address){
         String[] octets = address.split("\\.");
         String binaryOctets = "";
+
         int numOctets = octets.length;
         int count = 0;
         for(String octet: octets){
+            String octetBinary = "";
             int binary = Integer.parseInt(octet);
-            binaryOctets = binaryOctets.concat(Integer.toBinaryString(binary));
-            count = count+1;
+            octetBinary = Integer.toBinaryString(binary);
+            
+            //fill front with x zeros if length is less than 8
+            if (octetBinary.length() < 8){
+                String spacer = "";
+                for (int i = 0;8 - octetBinary.length() > i; i++){
+                    spacer = spacer.concat("0");
+                }
+                octetBinary = spacer.concat(octetBinary);
+            }
+            
+            binaryOctets = binaryOctets.concat(octetBinary);
+            count ++;
             if(count < numOctets){
               binaryOctets = binaryOctets.concat(".");  
             }
