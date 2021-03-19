@@ -42,6 +42,8 @@ public class route extends javax.swing.JFrame {
         ipLabel = new javax.swing.JLabel();
         binaryLabel = new javax.swing.JLabel();
         binaryAddress = new javax.swing.JLabel();
+        nicLabel = new javax.swing.JLabel();
+        nic = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -94,6 +96,10 @@ public class route extends javax.swing.JFrame {
 
         binaryAddress.setText("Binary Address");
 
+        nicLabel.setText("Matches NIC");
+
+        nic.setText("NIC");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,6 +107,8 @@ public class route extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nic)
+                    .addComponent(nicLabel)
                     .addComponent(binaryAddress)
                     .addComponent(binaryLabel)
                     .addComponent(ipLabel)
@@ -120,11 +128,15 @@ public class route extends javax.swing.JFrame {
                 .addComponent(binaryLabel)
                 .addGap(4, 4, 4)
                 .addComponent(binaryAddress)
-                .addGap(10, 10, 10)
+                .addGap(20, 20, 20)
+                .addComponent(nicLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nic)
+                .addGap(15, 15, 15)
                 .addComponent(inputBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         pack();
@@ -136,8 +148,11 @@ public class route extends javax.swing.JFrame {
         IPProject.newInput = inputBox.getText();
         //binaryInput = IPProject.simpleBinaryAddress(IPProject.newInput);
         binaryAddress.setText(IPProject.makeBinaryAddress(newInput));
+        
         System.out.println("User I.P. Address: " + newInput);
         System.out.println("Binary Input of User Address:  " + binaryAddress.getText());
+        System.out.println("Binary Input matches:  " + IPProject.compareIP());
+        nic.setText(IPProject.compareIP());
     }//GEN-LAST:event_buttonActionPerformed
 
     private void inputBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBoxActionPerformed
@@ -192,6 +207,8 @@ public class route extends javax.swing.JFrame {
     private javax.swing.JLabel ipLabel;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
+    private javax.swing.JLabel nic;
+    private javax.swing.JLabel nicLabel;
     private javax.swing.JLabel userAddress;
     // End of variables declaration//GEN-END:variables
 }
