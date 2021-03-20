@@ -35,20 +35,7 @@ public class IPProject {
         route dialog = new route();
         dialog.setVisible(true);
     }
-    
-    // NOT WORKING YET
-    public static int simpleBinaryAddress(String address){
-        String[] octets = address.split("\\.");
-        String binaryOctets = "";
-        int simpleBinary = 0;
-        for(String octet: octets){
-            int binary = Integer.parseInt(octet);
-            binaryOctets = binaryOctets.concat(Integer.toBinaryString(binary));
-        }
-        simpleBinary = Integer.parseInt(binaryOctets);
-        return simpleBinary;
-    }
-    
+
     public static String makeBinaryAddress(String address){
         String[] octets = address.split("\\.");
         String binaryOctets = "";
@@ -87,10 +74,11 @@ public class IPProject {
         String[] subnet22 = new String[]{"11111111","11111111","11111100","00000000"};
         String[] subnet23 = new String[]{"11111111","11111111","11111110","00000000"};
         String[][] subnets = new String[][]{subnet22,subnet23};
-        String[] networkBinary = new String[]{"","","",""};
-        char subnetChar;
-        char ipChar;
-        String outcome = "";
+        String[] networkBinary = new String[4];
+        int subnetChar;
+        int ipChar;
+        String octetResult = "";
+        
         //first convert ip to network address by bitwise AND
         String[] ipOctets = binaryAddress.split("\\.");
         //for each subnet
@@ -98,16 +86,14 @@ public class IPProject {
             //do an operation that multiplies subnet digit [i] * ipdigit[i] and store into networkBinary as string
             //for each subnet octet
             for(int x = 0; x < 4; x++){
-                //perform a bitwise and for both IP and Mask Octets
+                //perform a bitwise and for both IP and Mask Octets and store results in new octet
                 for (int i = 0; i < 8; i++){
-                    subnetChar = subnet[x].charAt(i);
-                    int subnetDigit = subnetChar - '0';
-                    ipChar = ipOctets[x].charAt(i);
-                    int ipDigit = ipChar - '0';
-                    outcome = outcome.concat(String.valueOf(ipDigit * subnetDigit));
+                    subnetChar = subnet[x].charAt(i) - '0';
+                    ipChar = ipOctets[x].charAt(i) - '0';
+                    octetResult = octetResult.concat(String.valueOf(subnetChar * ipChar));
                 }
-                networkBinary[x] = outcome;
-                outcome = "";
+                networkBinary[x] = octetResult;
+                octetResult = "";
             }
             //now that we have an array of binary numbers in networkBinary we need to convert 
             //back to a single string of IPV4 format ex xxx.xxx.xxx.xxx
@@ -118,7 +104,7 @@ public class IPProject {
                     ipNetworkAddress = ipNetworkAddress.concat(".");
                 }
             }
-            //then return if the network address matches any nics
+            //then return nic if the network address matches any nic
             for (String[] nic: nics){
                 if(nic[0].equals(ipNetworkAddress)){
                 return nic[1];
