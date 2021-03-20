@@ -19,9 +19,13 @@ public class IPProject {
     public static Scanner input = new Scanner(System.in);
     public static String binaryAddress = "";
     public static String[][] nics = new String[][] {
-        {"135.46.56.0","Interface 0"},
+        {"135.46.56.0","Interface 0",},
         {"135.46.60.0","Interface 1"},
-        {"192.53.40.0","Router 1"},
+        {"192.53.40.0","Router 1"}
+    };
+    public static String[][] subnets = new String[][]{
+        {"11111111","11111111","11111100","00000000"},
+        {"11111111","11111111","11111110","00000000"}
     };
     
     /**
@@ -39,15 +43,15 @@ public class IPProject {
     public static String makeBinaryAddress(String address){
         String[] octets = address.split("\\.");
         String binaryOctets = "";
-
         int numOctets = octets.length;
         int count = 0;
+
         for(String octet: octets){
             String octetBinary = "";
             int binary = Integer.parseInt(octet);
             octetBinary = Integer.toBinaryString(binary);
             
-            //fill front with x zeros if length is less than 8
+            //fill front of octet with x zeros if length is less than 8
             if (octetBinary.length() < 8){
                 String spacer = "";
                 for (int i = 0;8 - octetBinary.length() > i; i++){
@@ -58,6 +62,7 @@ public class IPProject {
             
             binaryOctets = binaryOctets.concat(octetBinary);
             count ++;
+
             if(count < numOctets){
               binaryOctets = binaryOctets.concat(".");  
             }
@@ -69,24 +74,16 @@ public class IPProject {
     }
     
     public static String compareIP(){
-        String ipNetworkAddress = ""; //form of "xxx.xxx.xxx.xxx"
-        //did it the lazy way and hardcoded this.
-        String[] subnet22 = new String[]{"11111111","11111111","11111100","00000000"};
-        String[] subnet23 = new String[]{"11111111","11111111","11111110","00000000"};
-        String[][] subnets = new String[][]{subnet22,subnet23};
+        String ipNetworkAddress = "";
         String[] networkBinary = new String[4];
         int subnetChar;
         int ipChar;
         String octetResult = "";
-        
-        //first convert ip to network address by bitwise AND
         String[] ipOctets = binaryAddress.split("\\.");
-        //for each subnet
+
         for(String[] subnet: subnets){
-            //do an operation that multiplies subnet digit [i] * ipdigit[i] and store into networkBinary as string
-            //for each subnet octet
+            //for each subnet octet perform a bitwise AND for both IP and Mask Octets and store results
             for(int x = 0; x < 4; x++){
-                //perform a bitwise and for both IP and Mask Octets and store results in new octet
                 for (int i = 0; i < 8; i++){
                     subnetChar = subnet[x].charAt(i) - '0';
                     ipChar = ipOctets[x].charAt(i) - '0';
@@ -95,16 +92,16 @@ public class IPProject {
                 networkBinary[x] = octetResult;
                 octetResult = "";
             }
-            //now that we have an array of binary numbers in networkBinary we need to convert 
-            //back to a single string of IPV4 format ex xxx.xxx.xxx.xxx
-            //for each octet in network binary[] we need to convert back to IPV4 format XXX and combine in one string
+
+            //convert {"xxxxxxxx","xxxxxxxx","xxxxxxxx","xxxxxxxx"} ---> "xxx.xxx.xxx.xxx"
             for(int z = 0; z < 4; z++){
                 ipNetworkAddress = ipNetworkAddress.concat(String.valueOf(Integer.parseInt(networkBinary[z],2)));
                 if(z < 3){
                     ipNetworkAddress = ipNetworkAddress.concat(".");
                 }
             }
-            //then return nic if the network address matches any nic
+
+            //return nic if the network address of input IP matches any nic
             for (String[] nic: nics){
                 if(nic[0].equals(ipNetworkAddress)){
                 return nic[1];
