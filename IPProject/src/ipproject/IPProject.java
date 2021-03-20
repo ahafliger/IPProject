@@ -2,6 +2,12 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ * Input IPs to test
+ * A)135.46.63.10
+ * B)135.46.57.14
+ * C)135.46.52.2
+ * D)192.53.40.7
+ * E)192.53.56.7
  */
 package ipproject;
 
