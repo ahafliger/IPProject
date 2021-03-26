@@ -47,8 +47,11 @@ public class IPProject {
     }
 
     public static String makeBinaryAddress(String address){
-        String[] octets = address.split("\\.");
+        //we want output in form xxxxxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx
         String binaryOctets = "";
+
+        //split string into octets
+        String[] octets = address.split("\\.");
         int numOctets = octets.length;
         int count = 0;
 
