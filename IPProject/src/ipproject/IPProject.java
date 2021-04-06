@@ -25,8 +25,8 @@ public class IPProject {
     public static Scanner input = new Scanner(System.in);
     public static String binaryAddress = "";
     public static String[][] nics = new String[][] {
-        {"135.46.56.0","Interface 0",},
-        {"135.46.60.0","Interface 1"},
+        {"135.46.56.0","Interface 1",},
+        {"135.46.60.0","Interface 2"},
         {"192.53.40.0","Router 1"}
     };
     public static String[][] subnets = new String[][]{
